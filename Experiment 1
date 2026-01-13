@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int operations=0;   //to calculate operations done
+int depth=0;
+void complexRec(int n) {
+   depth++;
+   if (n <= 2) {
+        operations++;
+       return;
+   }
+
+
+   int p = n;
+   while (p > 0) {
+       vector<int> temp(n);
+       for (int i = 0; i < n; i++) {
+           temp[i] = i ^ p;
+          operations++;
+       }
+       p >>= 1;
+   }
+
+
+   vector<int> small(n);
+   for (int i = 0; i < n; i++) {
+       small[i] = i * i;
+   }
+
+
+   if (n % 3 == 0) {
+       reverse(small.begin(), small.end());
+   } else {
+       reverse(small.begin(), small.end());
+   }
+
+
+   complexRec(n / 2);
+   complexRec(n / 2);
+   complexRec(n / 2);
+}
+
+int main() {
+    int n = 8;
+    complexRec(n);
+    cout << "Total operations: " << operations << endl;
+    cout << "Recursion depth: " << depth << endl;
+    return 0;
+}
+
+
+// Recurrence Relation: T(n) = 3T(n/2) + nlogn
+// Time Complexity: O(n^(log2(3)))
